@@ -1,0 +1,66 @@
+Structures - A structure (or struct) is a user-defined data type that groups together variables under a single name. 
+It's a way to organize related data into a single unit, making your code cleaner and more manageable—especially when dealing with 
+complex data. An example is:
+    struct Person {
+        std::string name;
+        int age;
+        float height;
+    };
+This creates a "object" called Person which has the values name, age, and hieght.
+
+
+std::uint32_t - Is a fixed-width unsigned 32-bit integer type defined in C++ for precise control over data size—especially useful in 
+OpenGL for indexing, IDs, and binary data. It guarantees exactly 32 bits, unlike an unsigned int which can vary by platform. 
+
+
+std::vector<Vertex> vertices - This is a data structure that holds a collection of vertices, where each vertex is a point with position
+and other attributes, and each vertex is represented as a vector or a data structure containing a vector.
+    struct Vertex {
+        glm::vec3 position;
+        glm::vec3 Normal;
+        glm::vec3 Color;
+        glm::vec3 texCoords
+    }
+This is used to define the to be "object"/vertex's position in space and other data like color texture coordinates and the normal which
+is a part of the vertex object.
+
+glm::vec3 - Is a 3D vector type from the GLM (OpenGL Mathematics) library, commonly used in OpenGL applications to represent positions, 
+directions, colors, and other 3-component data.
+
+
+std::size_t - Is an unsigned integer type. It's used to represent sizes and counts — like the number of elements in an array, 
+the size of a buffer, or the result of sizeof.
+
+
+Quick Need To Know -->
+A vertex buffer is a memory area used by the graphics hardware (GPU) to store data for a list of vertices, which are the points that 
+make up 3D models.
+
+
+vertexStrideBytes - A vertex stride is the number of bytes between the start of one vertex and the start of the next vertex 
+in a buffer (memory area used by the GPU to store data for a the list of vertices). Think of it as the "step size" to hop from one 
+vertex tothe next in a tightly or interleaved buffer.
+
+
+Understanding the cube:
+
+A cube is made of 8 vertices (corners) and one face of a cube is made of two triangles with each triangle having 3 vertices. Each vertex
+for the singlar triangle has 
+    - 3 floats for position (x, y, z)
+    - 3 floats for color (r, g, b) — if you're using per-vertex color
+    - 2 floats for texture coordinates (u, v)
+So for one triangle, the total data is: (3+3+2) * 3 = 24 floats. So the sqaure will have a total of 48 floats per vertex.
+
+
+OffsetBytes - This is the distance messuared in bytes, from a starting point. So for the positionOffset, colorOffset, uvOffset we are 
+taking this from our floatsPerVertex which is a total of 8 as the postion is 3, the color is 3 and the uv is 2. 
+
+
+
+
+
+Renderer::draw binds the VAO that belongs to the MeshHandle you pass into the Renderer. If your light cube was made with a separate 
+manual VAO/VBO/EBO, that one won’t be used unless you either 
+
+(a) make a Mesh/MeshHandle from the light vertices/indices and pass that 
+to Renderer, or (b) draw the manual VAO yourself. 

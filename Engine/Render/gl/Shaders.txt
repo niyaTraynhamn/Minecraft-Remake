@@ -1,0 +1,20 @@
+What is a Shader?
+
+A shader at is simplest is a chunk of code that gets run on the graphics processing unit (GPU) instead of on the central processing
+unit (CPU). Both the CPU and GPU are made up of cores, which is where the processing is actually done, and each CPU core is much
+faster, more powerful, and more versitile than a GPU core.
+
+Why do we want to run code on the GPU instead of the CPU?
+
+The GPU has hundreds of cores we as the CPU only has a handfull this means the GPU excels at doing lots of things all at once.
+The most common use for shaders is to do all the calculations involved with displaying things on the screen and this usally done
+in 2 stages with a Vertex Shader and Fragment Shader, which is sometimes called a Pixel Shader.
+
+We still need to run code on the CPU to use Shaders. To draw 3D shape on the screen the code on the CPU will pass the GPU a list
+of all the points or vertices that define the surface of the shape we want to draw. The Vertex Shader takes these points and 
+figures out where they should appear on the screen, and then the Fragment Shader figures out what color each spot on the surface
+of that object should be. There are other types of shaders with specific use-cases as well such as Geomtery and Compute Shaders.
+
+We have to use a special programming laungage called GLSL. When you create a new varible in GLSL you have to tell the varible
+what type of varible it is and you can't change it once it is set. 
+

@@ -1,0 +1,77 @@
+MinecraftGame/
+├─ CMakeLists.txt
+├─ external/                    # third-party libs (glfw, glad, stb, glm, etc.)
+│  ├─ glfw/ …                  # added via add_subdirectory or fetched by script
+│  ├─ glad/ …
+│  ├─ stb/ …
+│  └─ glm/ …
+├─ assets/
+│  ├─ shaders/
+│  │  ├─ core/                 # shared includes, common.glsl, lighting.glsl
+│  │  ├─ world/                # terrain, water, foliage
+│  │  └─ debug/
+│  ├─ textures/
+│  │  ├─ blocks/               # texture atlas sources or individual pngs
+│  │  └─ ui/
+│  ├─ atlases/                 # generated packed atlases + .json/.toml metadata
+│  └─ models/                  # JSON/OBJ for non-cube meshes (fence, slab, etc.)
+├─ data/                       # runtime configs (keybinds, graphics.ini, block db)
+│  └─ blocks.toml              # block registry & model/tex references
+├─ engine/                      # the reusable engine (no game specifics)
+│  ├─ core/
+│  │  ├─ Application.hpp/.cpp  # init loop, lifecycle, tick/render
+│  │  ├─ Time.hpp/.cpp         # dt, fps
+│  │  ├─ Log.hpp/.cpp
+│  │  ├─ Input.hpp/.cpp
+│  │  ├─ Config.hpp/.cpp
+│  │  └─ Platform.hpp/.cpp     # window/context bootstrap
+│  ├─ math/
+│  │  └─ AABB.hpp/.cpp
+│  ├─ render/
+│  │  ├─ gl/
+│  │  │  ├─ VAO.hpp/.cpp
+│  │  │  ├─ VBO.hpp/.cpp
+│  │  │  ├─ EBO.hpp/.cpp
+│  │  │  ├─ Shader.hpp/.cpp
+│  │  │  ├─ Program.hpp/.cpp   # links Shaders; uniform helpers
+│  │  │  ├─ Texture.hpp/.cpp
+│  │  │  ├─ TextureAtlas.hpp/.cpp
+│  │  │  ├─ Framebuffer.hpp/.cpp
+│  │  │  └─ GLCommon.hpp       # gl error checks, loaders
+│  │  ├─ Mesh.hpp/.cpp         # generic CPU-side mesh: vertices/indices/vertex layout
+│  │  ├─ MeshHandle.hpp/.cpp   # GPU-side: owns VAO/VBO/EBO; draw()
+│  │  ├─ Material.hpp/.cpp
+│  │  ├─ Renderer.hpp/.cpp     # high-level draw entry points; state sorting
+│  │  └─ Camera.hpp/.cpp
+│  ├─ resources/
+│  │  ├─ FileSystem.hpp/.cpp   # search paths (assets/, user dir)
+│  │  ├─ ImageLoader.hpp/.cpp  # stb_image wrapper
+│  │  ├─ ShaderLoader.hpp/.cpp # #include support for GLSL
+│  │  ├─ MeshLoader.hpp/.cpp   # loads OBJ/JSON -> Mesh
+│  │  └─ ResourceCache.hpp/.cpp
+│  └─ util/
+│     ├─ Hash.hpp
+│     └─ ScopeTimer.hpp/.cpp
+├─ game/                        # your Minecraft-like specifics
+│  ├─ world/
+│  │  ├─ Block.hpp/.cpp        # id, flags, face uv mapping
+│  │  ├─ BlockRegistry.hpp/.cpp# loads data/blocks.toml → types/models/materials
+│  │  ├─ Chunk.hpp/.cpp        # 16x256x16 data, meshing output
+│  │  ├─ ChunkMesher.hpp/.cpp  # greedy meshing, face culling, overlay logic
+│  │  ├─ TerrainGen.hpp/.cpp   # noise, biome
+│  │  └─ World.hpp/.cpp        # chunk manager, streaming
+│  ├─ models/
+│  │  ├─ CubeMesh.hpp/.cpp     # builds cube with face ranges (sides/top/bottom/overlay)
+│  │  └─ FenceMesh.hpp/.cpp    # example non-cube
+│  ├─ render/
+│  │  ├─ WorldRenderer.hpp/.cpp# submits chunk meshes to Renderer
+│  │  └─ BlockTint.hpp/.cpp    # biome/grass leaf tinting
+│  └─ Game.hpp/.cpp            # ties engine Application to world systems
+├─ tools/
+│  ├─ atlas_packer/            # (optional) image packer → assets/atlases/*
+│  └─ convert_models/          # convert MC-like JSON → Mesh
+├─ tests/
+│  ├─ CMakeLists.txt
+│  └─ test_chunk_mesher.cpp
+└─ src/                        # thin entry, wires everything
+   └─ main.cpp
